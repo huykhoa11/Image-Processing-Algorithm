@@ -1,0 +1,10 @@
+C:\Users\user\source\repos\ImgPro\ImgPro\bin\Debug\ImgPro.exe.config
+C:\Users\user\source\repos\ImgPro\ImgPro\bin\Debug\ImgPro.exe
+C:\Users\user\source\repos\ImgPro\ImgPro\bin\Debug\ImgPro.pdb
+C:\Users\user\source\repos\ImgPro\ImgPro\obj\Debug\ImgPro.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\ImgPro\ImgPro\obj\Debug\ImgPro.Form1.resources
+C:\Users\user\source\repos\ImgPro\ImgPro\obj\Debug\ImgPro.Properties.Resources.resources
+C:\Users\user\source\repos\ImgPro\ImgPro\obj\Debug\ImgPro.csproj.GenerateResource.cache
+C:\Users\user\source\repos\ImgPro\ImgPro\obj\Debug\ImgPro.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\ImgPro\ImgPro\obj\Debug\ImgPro.exe
+C:\Users\user\source\repos\ImgPro\ImgPro\obj\Debug\ImgPro.pdb
