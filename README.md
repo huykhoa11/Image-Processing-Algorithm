@@ -6,8 +6,8 @@ It has Histogram Equalization, Binarization, Adaptive Thresholding, Monochrome, 
 <strong>Salt & Pepper filtering by using Median Filter.</strong>
 ![image](https://user-images.githubusercontent.com/69473375/138560699-113c04bd-5a1c-4979-a062-cf4f28854773.png)
 <br><br><br>
-<strong>Labeling</strong><br>
+<strong>Labeling by 8-Connectivity</strong><br>
 ![image](https://user-images.githubusercontent.com/69473375/138560715-6012a5b7-8918-4ac3-86f2-93f64b0cd919.png)
 <br><br><br>
-<strong>Use adaptive thresholing algorithm to create binary image.</strong>
+<strong>Use Adaptive Thresholing's algorithm to create binary image.</strong>
 ![image](https://user-images.githubusercontent.com/69473375/138560747-37fb1e65-71fe-4665-b187-e4ea9032606f.png)
