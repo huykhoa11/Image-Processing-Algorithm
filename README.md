@@ -9,5 +9,5 @@ It has Histogram Equalization, Binarization, Adaptive Thresholding, Monochrome, 
 <strong>Labeling by 8-Connectivity</strong><br>
 ![image](https://user-images.githubusercontent.com/69473375/138560715-6012a5b7-8918-4ac3-86f2-93f64b0cd919.png)
 <br><br><br>
-<strong>Use Adaptive Thresholing's algorithm to create binary image.</strong>
+<strong>Use Adaptive Thresholding's algorithm to create binary image.</strong>
 ![image](https://user-images.githubusercontent.com/69473375/138560747-37fb1e65-71fe-4665-b187-e4ea9032606f.png)
