@@ -578,6 +578,369 @@ namespace ImgPro
         }
 
 
+        public void Dilation()
+        {
+            int avg = 128;
+            double tmp, tmp1;
+            int a;
+
+            int[,] tmpPixel = new int[imgHeight + 4, imgWidth + 4]; 
+            int[,] savePixel = new int[imgHeight, imgWidth];
+            //var mask = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[,] mask = new int[5, 5];
+
+            for (int i = 2; i < imgHeight + 2; i++)
+            {
+                for (int j = 2; j < imgWidth + 2; j++)
+                {
+                    c = loadBmp.GetPixel(j - 2, i - 2);
+                    tmp = 0.299 * c.R + 0.587 * c.G + 0.114 * c.B;
+                    tmp1 = Math.Round(tmp, MidpointRounding.AwayFromZero);
+                    a = Convert.ToInt32(tmp1);  //grayscale of pixel
+                    if (a >= avg) a = 0;
+                    else if (a < avg) a = 1;
+                    tmpPixel[i, j] = a;
+                }
+            }
+
+            
+            for (int i = 2; i < imgHeight + 2; i++)
+            {
+                for (int j = 2; j < imgWidth + 2; j++)
+                {
+                    //int x = tmpPixel[i, j];
+
+                    for(int n=0; n<5; n++)    //we use mask 5x5
+                    {
+                        for(int m=0; m<5; m++)
+                        {
+                            mask[n, m] = tmpPixel[i - 2 + n, j - 2 + m];
+                        }
+                    }
+
+                    for (int n = 0; n < 5; n++)    //we use mask 5x5
+                    {
+                        for (int m = 0; m < 5; m++)
+                        {
+                            if(mask[n, m] == 1)
+                            {
+                                savePixel[i - 2, j - 2] = 1;
+                            }
+                        }
+                    }
+
+
+
+                    int x = savePixel[i - 2, j - 2];
+                    if (x == 1) x = 0;
+                    else if (x == 0) x = 255;
+                    newBmp.SetPixel(j - 2, i - 2, Color.FromArgb(x, x, x));
+                }
+            }
+        }
+
+
+        public void Erosion()
+        {
+            int avg = 128;
+            double tmp, tmp1;
+            int a;
+
+            int[,] tmpPixel = new int[imgHeight + 4, imgWidth + 4];
+            int[,] savePixel = new int[imgHeight, imgWidth];
+            //var mask = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[,] mask = new int[5, 5];
+
+
+            for (int i = 2; i < imgHeight + 2; i++)
+            {
+                for (int j = 2; j < imgWidth + 2; j++)
+                {
+                    c = loadBmp.GetPixel(j - 2, i - 2);
+                    tmp = 0.299 * c.R + 0.587 * c.G + 0.114 * c.B;
+                    tmp1 = Math.Round(tmp, MidpointRounding.AwayFromZero);
+                    a = Convert.ToInt32(tmp1);  //grayscale of pixel
+                    if (a >= avg) a = 0;
+                    else if (a < avg) a = 1;
+                    tmpPixel[i, j] = a;
+                    savePixel[i - 2, j - 2] = a;
+                    //newBmp.SetPixel(j - 2, i - 2, Color.FromArgb(a, a, a));
+                }
+            }
+
+            
+            for (int i = 2; i < imgHeight + 2; i++)
+            {
+                for (int j = 2; j < imgWidth + 2; j++)
+                {
+                    //int x = tmpPixel[i, j];
+
+                    for (int n = 0; n < 5; n++)    //we use mask 5x5
+                    {
+                        for (int m = 0; m < 5; m++)
+                        {
+                            mask[n, m] = tmpPixel[i - 2 + n, j - 2 + m];
+                        }
+                    }
+
+                    for (int n = 0; n < 5; n++)    //we use mask 5x5
+                    {
+                        for (int m = 0; m < 5; m++)
+                        {
+                            if (mask[n, m] == 0)
+                            {
+                                savePixel[i - 2, j - 2] = 0;
+                            }
+                        }
+                    }
+
+                    int x = savePixel[i - 2, j - 2];
+                    if (x == 1) x = 0;
+                    else if (x == 0) x = 255;
+                    newBmp.SetPixel(j - 2, i - 2, Color.FromArgb(x, x, x));
+                }
+            }
+        }
+
+
+        public void Skeleton()
+        {
+            int avg = 128;
+            double tmp, tmp1;
+            int a;
+
+            int[,] tmpPixel = new int[imgHeight + 2, imgWidth + 2];
+            int[,] savePixel = new int[imgHeight, imgWidth];
+            //var mask = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[,] mask = new int[3, 3];
+            int[,] structEle = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+
+
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    c = loadBmp.GetPixel(j - 1, i - 1);
+                    tmp = 0.299 * c.R + 0.587 * c.G + 0.114 * c.B;
+                    tmp1 = Math.Round(tmp, MidpointRounding.AwayFromZero);
+                    a = Convert.ToInt32(tmp1);  //grayscale of pixel
+                    if (a >= avg) a = 0;
+                    else if (a < avg) a = 1;
+                    tmpPixel[i, j] = a;
+                    savePixel[i - 1, j - 1] = 0;
+                }
+            }
+
+            int x;
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j] == 1 && tmpPixel[i, j - 1] == 0 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 1 && tmpPixel[i + 1, j - 1] == 0 && tmpPixel[i + 1, j] == 0)
+                    {
+                        //tmpPixel[i - 1, j] = 0;
+                        //tmpPixel[i, j - 1] = 0;
+                        //tmpPixel[i, j] = 1;
+                        savePixel[i - 1, j - 1] = 1;
+                        //tmpPixel[i, j + 1] = 0;
+                        //tmpPixel[i + 1, j] = 0;
+                    }
+                    //Console.Write(x + ", ");
+                }
+                //Console.WriteLine();
+            }
+
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j] == 1 && tmpPixel[i, j - 1] == 1 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 0 && tmpPixel[i + 1, j] == 0 && tmpPixel[i + 1, j + 1] == 0)
+                    {
+                        savePixel[i - 1, j - 1] = 1;
+                    }
+                }
+            }
+
+
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j] == 0 && tmpPixel[i - 1, j + 1] == 0 && tmpPixel[i, j - 1] == 1 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 0 && tmpPixel[i + 1, j] == 1)
+                    {
+                        savePixel[i - 1, j - 1] = 1;
+                    }
+                }
+            }
+
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j - 1] == 0 && tmpPixel[i - 1, j] == 0 && tmpPixel[i, j - 1] == 0 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 1 && tmpPixel[i, j + 1] == 1)
+                    {
+                        savePixel[i - 1, j - 1] = 1;
+                    }
+
+                    x = savePixel[i - 1, j - 1];
+                    if (x == 1) x = 0;
+                    else if (x == 0) x = 255;
+                    newBmp.SetPixel(j - 1, i - 1, Color.FromArgb(x, x, x));
+                }
+            }
+        }
+
+        public void Thinning()
+        {
+            int avg = 128;
+            double tmp, tmp1;
+            int a;
+
+            int[,] tmpPixel = new int[imgHeight + 2, imgWidth + 2];
+            int[,] savePixel = new int[imgHeight, imgWidth];
+            //var mask = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[,] mask = new int[3, 3];
+            int[,] structEle = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+
+
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    c = loadBmp.GetPixel(j - 1, i - 1);
+                    tmp = 0.299 * c.R + 0.587 * c.G + 0.114 * c.B;
+                    tmp1 = Math.Round(tmp, MidpointRounding.AwayFromZero);
+                    a = Convert.ToInt32(tmp1);  //grayscale of pixel
+                    if (a >= avg) a = 0;
+                    else if (a < avg) a = 1;
+                    tmpPixel[i, j] = a;
+                    savePixel[i - 1, j - 1] = a;
+                }
+            }
+
+
+            int x;
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j - 1] == 0 && tmpPixel[i - 1, j] == 0 &&                           // 0 0 *
+                        tmpPixel[i, j-1]       == 0 && tmpPixel[i, j] == 1 && tmpPixel[i, j+1] == 1 &&      // 0 1 1
+                        tmpPixel[i + 1, j] == 1)                                                            // * 1 *
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+                    //Console.Write(x + ", ");
+
+                }
+                //Console.WriteLine();
+            }
+            ///////////////////////////////////////////////////////////
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j - 1] == 0 && tmpPixel[i - 1, j] == 0 && tmpPixel[i - 1, j + 1] == 0 && // 0 0 0
+                        tmpPixel[i, j] == 1 &&                                                                   // * 1 *
+                        tmpPixel[i + 1, j - 1] == 1 && tmpPixel[i + 1, j] == 1)                                  // 1 1 *
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////////////
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if ( tmpPixel[i - 1, j] == 0 && tmpPixel[i - 1, j + 1] == 0 &&                              // * 0 0
+                        tmpPixel[i, j - 1] == 1 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 0 &&            // 1 1 0
+                        tmpPixel[i + 1, j] == 1)                                                                // * 1 *
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j - 1] == 1 && tmpPixel[i - 1, j + 1] == 0 &&                           // 1 * 1
+                        tmpPixel[i, j - 1] == 1 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 0 &&            // 1 1 0
+                        tmpPixel[i + 1, j + 1] == 0)                                                            // * * 0
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+                }
+            }
+
+
+            ///////////////////////////////////////////////
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j] == 1 &&                                                              // * 1 *
+                        tmpPixel[i, j - 1] == 1 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 0 &&            // 1 1 0
+                         tmpPixel[i + 1, j] ==0 && tmpPixel[i + 1, j + 1] == 0)                                 // * 0 0 
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j] == 0 && tmpPixel[i - 1, j + 1] == 1 &&                              // * 1 1
+                        tmpPixel[i, j] == 1 &&                                                                 // * 1 *
+                        tmpPixel[i + 1, j - 1] == 0 && tmpPixel[i + 1, j] == 0 && tmpPixel[i + 1, j + 1] == 0) // 0 0 0
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j] == 1 &&                                                          // * 1 *
+                        tmpPixel[i, j - 1] == 0 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 1 &&        // 0 1 1
+                        tmpPixel[i + 1, j - 1] == 0 && tmpPixel[i + 1, j] == 0)                             // 0 0 *
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////
+            for (int i = 1; i < imgHeight + 1; i++)
+            {
+                for (int j = 1; j < imgWidth + 1; j++)
+                {
+                    if (tmpPixel[i - 1, j - 1] == 0 &&                                                      // 0 * *
+                        tmpPixel[i, j - 1] == 0 && tmpPixel[i, j] == 1 && tmpPixel[i, j + 1] == 1 &&        // 0 1 1
+                        tmpPixel[i + 1, j - 1] == 0  && tmpPixel[i + 1, j + 1] == 1)                        // 0 * 1
+                    {
+                        savePixel[i - 1, j - 1] = 0;
+                    }
+
+                    x = savePixel[i - 1, j - 1];
+                    if (x == 1) x = 0;
+                    else if (x == 0) x = 255;
+                    newBmp.SetPixel(j - 1, i - 1, Color.FromArgb(x, x, x));
+                }
+            }
+        }
+
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -636,6 +999,25 @@ namespace ImgPro
                 MedianFilter();
             }
 
+            else if (comboBox1.Text == "Dilation (5x5)")
+            {
+                Dilation();
+            }
+
+            else if (comboBox1.Text == "Erosion (5x5)")
+            {
+                Erosion();
+            }
+
+            else if (comboBox1.Text == "Skeleton")
+            {
+                Skeleton();
+            }
+
+            else if (comboBox1.Text == "Thinning")
+            {
+                Thinning();
+            }
 
             pictureBox2.Image = new Bitmap(newBmp, new Size(imgWidth, imgHeight));
         }

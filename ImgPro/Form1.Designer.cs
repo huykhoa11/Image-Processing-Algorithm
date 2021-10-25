@@ -66,7 +66,7 @@ namespace ImgPro
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -111,7 +111,11 @@ namespace ImgPro
             "Monochrome",
             "Labeling",
             "Edge Detection (Sobel)",
-            "Median Filter"});
+            "Median Filter",
+            "Dilation (5x5)",
+            "Erosion (5x5)",
+            "Skeleton",
+            "Thinning"});
             this.comboBox1.Location = new System.Drawing.Point(12, 60);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(143, 20);
