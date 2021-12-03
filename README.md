@@ -1,5 +1,4 @@
 # Image-Processing-Algorithm
-日本語テスト
 Image Processing algorithm code in C#. This application dont't use EmguCV, just pure C#. <br>
 It has Histogram Equalization, Binarization, Adaptive Thresholding, Monochrome, Labeling, Edge Detection by Sobel algorithm and Salt & Pepper Filter by Median Filter function <br>
 
