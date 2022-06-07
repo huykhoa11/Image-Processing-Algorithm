@@ -11,3 +11,7 @@ It has Histogram Equalization, Binarization, Adaptive Thresholding, Monochrome, 
 <br><br><br>
 <strong>Use Adaptive Thresholding's algorithm to create binary image.</strong>
 ![image](https://user-images.githubusercontent.com/69473375/138560747-37fb1e65-71fe-4665-b187-e4ea9032606f.png)
+<br><br><br>
+<strong>Sobel in Edge Detection</strong>
+![image](https://user-images.githubusercontent.com/69473375/172356537-4628561f-2867-43cd-ad4e-fbb2421d4172.png)
+
